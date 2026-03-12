@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-neon-orange: #FF6B00;
+  --color-neon-blue: #00F0FF;
+  --color-deep-navy: #050A14;
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+  --color-glass-bg: rgba(10, 20, 40, 0.6);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  background-color: var(--color-deep-navy);
+  color: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #02040a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-orange);
+}
+
+.glass-panel {
+  background: var(--color-glass-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--color-glass-border);
+}
+
+.hud-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-neon-blue), transparent);
+  opacity: 0.3;
+}
+
+.hud-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--color-neon-blue);
+  opacity: 0.6;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+.orange-glow {
+  box-shadow: 0 0 20px rgba(255, 107, 0, 0.3);
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, rgba(0, 240, 255, 0.1), transparent);
+  pointer-events: none;
+  animation: scanline 8s linear infinite;
+}
+
+.clip-path-slant {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 95% 100%, 0 100%);
+}
+
+/* ===== CORREÇÕES PARA MOBILE ===== */
+@media (max-width: 768px) {
+  html {
+    scroll-padding-top: 60px;
+  }
+
+  /* Garantir que o menu mobile tenha z-index correto */
+  .md\:hidden {
+    z-index: 60;
+  }
+
+  /* Melhorar área de toque dos links */
+  a,
+  button {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    cursor: pointer;
+  }
+
+  /* Prevenir zoom automático em inputs (se houver) */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  /* Ajuste para o header fixo não atrapalhar cliques */
+  nav {
+    z-index: 50;
+  }
+
+  /* Garantir que o menu suspenso fique acima */
+  .md\:hidden+div {
+    z-index: 55;
+    position: relative;
+  }
+
+  /* Melhorar contraste dos links no menu mobile */
+  .text-gray-300 {
+    color: #d1d5db;
+  }
+
+  /* Ajuste para o scroll suave */
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ===== CORREÇÕES ADICIONAIS PARA TODOS OS DISPOSITIVOS ===== */
+/* Garantir que os elementos clicáveis não tenham fundo azul no toque */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Melhorar acessibilidade dos links */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-neon-orange);
+  outline-offset: 2px;
+}
+
+/* ===== CORREÇÕES ESPECÍFICAS PARA ANDROID/CHROME ===== */
+@supports (-webkit-touch-callout: none) {
+
+  /* CSS específico para dispositivos iOS */
+  .fixed {
+    -webkit-transform: translateZ(0);
+  }
+}
+
+/* ===== ANIMAÇÕES OTIMIZADAS PARA MOBILE ===== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
